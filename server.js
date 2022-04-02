@@ -13,7 +13,20 @@ const session = require('express-session');
 // const customCar = require('./controllers/customCar')
 const adminRoute = require('./controllers/adminSession')
 
-
+var whitelist = [
+  'http://localhost:3000',
+  'https://cardealerone.herokuapp.com/'
+];
+var corsOptions = {
+  credentials: true,
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
 
 app.use(
     session({
