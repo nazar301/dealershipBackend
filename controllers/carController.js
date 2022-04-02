@@ -32,12 +32,15 @@ router.post('/', (req, res) => {
 })
 
 
-router.get('/:id', (req, res) => {
 
-    Car.findById(req.params.id, (error, car) => {
+
+router.get('/:id', (req, res) => {
+    let id = req.params.id
+    Car.findById(id, (error, car) => {
 
         if(error) {
             res.status(400).json({error: error.message})
+            
         }
 
         res.status(200).json(car)
@@ -48,13 +51,14 @@ router.get('/:id', (req, res) => {
 
 // Delete Route:
 router.delete('/:id', (req, res) => {
-
+    console.log(req.params.id)
     Car.findByIdAndDelete(req.params.id, (error, car) => {
 
         if(error) {
             res.status(400).json({error: error.message})
+            return
         }
-
+            console.log('cardeleted')
         res.status(200).json(car)
 
     })

@@ -4,29 +4,36 @@ const app = express()
 // const PORT = 4000
 app.set('port', process.env.PORT || 4000);
 const cors = require('cors')
-const carController = require('./controllers/carController')
+
 
 const SESSION_SECRET = process.env.SESSION_SECRET;
 
 const userRoute = require('./controllers/sessions')
 const session = require('express-session');
 // const customCar = require('./controllers/customCar')
-const adminRoute = require('./controllers/adminSession')
+// const adminRoute = require('./controllers/adminSession')
+const carController = require('./controllers/carController')
 
-var whitelist = [
-  'http://localhost:3000',
-  'https://cardealerone.herokuapp.com/'
-];
-var corsOptions = {
-  credentials: true,
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
+// var whitelist = [
+//   'http://localhost:3000',
+//   'https://cardealerone.herokuapp.com/'
+// ];
+// var corsOptions = {
+//   credentials: false,
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+// };
+
+// CORS_ORIGIN_ALLOW_ALL = False
+// CORS_ALLOW_CREDENTIALS = True
+// CORS_ORIGIN_WHITELIST = (
+//     'https://cardealerone.herokuapp.com/' 
+//     )
 
 app.use(
     session({
@@ -54,7 +61,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-app.use('/session', adminRoute)
+// app.use('/session', adminRoute)
 // app.use('/custom', customCar)
 app.use('/session', userRoute)
 app.use('/cars', carController)
